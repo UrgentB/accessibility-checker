@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="utf-8" />
+		<title>AccessiScan</title>
+		<link rel="stylesheet" href="popup.css" />
+	</head>
+	<body>
+		<main class="popup">
+			<h1 class="popup__title">AccessiScan</h1>
+
+			<!-- Вид со сканированием -->
+			<section id="scan-view" class="view view--scan">
+				<button
+					id="scan-btn"
+					class="scan-button"
+					type="button"
+					aria-label="Сканировать страницу на доступность и подготовить JSON-отчёт"
+				>
+					<span class="scan-button__inner" aria-hidden="true">
+						<img
+							src="images/web-site.png"
+							alt=""
+							class="scan-button__browser"
+						/>
+						<img
+							src="images/magnifier.png"
+							alt=""
+							class="scan-button__magnifier"
+						/>
+					</span>
+				</button>
+			</section>
+
+			<!-- Вид с готовым файлом -->
+			<section id="result-view" class="view view--result" hidden>
+				<div class="file-card" aria-label="Отчёт о сканировании готов">
+					<div class="file-card__icon" aria-hidden="true">📄</div>
+					<div class="file-card__info">
+						<p class="file-card__name" id="file-name">dom-tree-report.json</p>
+						<p class="file-card__meta">
+							<span id="file-url">example.com</span> •
+							<span id="file-size">~0 KB</span>
+						</p>
+					</div>
+				</div>
+
+				<button id="download-btn" class="primary-button" type="button">
+					Скачать Отчёт
+				</button>
+
+				<button id="back-btn" class="back-button" type="button">
+					Новый скан
+				</button>
+			</section>
+
+			<p id="status" class="status" aria-live="polite"></p>
+		</main>
+
+		<script src="popup.js"></script>
+	</body>
+</html>

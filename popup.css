@@ -1,0 +1,255 @@
+:root {
+	--accent: #5a4dff;
+	--accent-soft: #e3ddff;
+	--bg: #ffffff;
+	--text: #1a1a1a;
+	--shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+	--radius-xl: 18px;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		sans-serif;
+	background: transparent;
+}
+
+.popup {
+	width: 200px;
+	padding: 16px 16px 14px;
+	background: var(--bg);
+	border: 6px solid var(--accent);
+	box-shadow: var(--shadow);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.popup__title {
+	margin: 0;
+	font-size: 20px;
+	font-family: 'K2D', sans-serif;
+	font-weight: 700;
+	font-style: normal;
+	color: var(--text);
+}
+
+.scan-button {
+	position: relative;
+	border: none;
+	padding: 10px;
+	border-radius: 16px;
+	background: var(--accent-soft);
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.scan-button__inner {
+	display: block;
+	position: relative;
+	width: 140px;
+	height: 140px;
+}
+
+.scan-button__browser {
+	width: 100%;
+	height: 100%;
+	display: block;
+}
+
+.scan-button__magnifier {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	bottom: 10px;
+	left: 10px;
+	transform-origin: center;
+}
+
+.scan-button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+	background: #f0ebff;
+}
+
+.scan-button:active {
+	transform: translateY(0);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.scan-button:focus-visible {
+	outline: 3px solid var(--accent);
+	outline-offset: 3px;
+}
+
+.status {
+	margin: 4px 0 0;
+	font-size: 12px;
+	color: #444;
+	text-align: center;
+	min-height: 1.2em; /* чтобы текст не прыгал */
+}
+/* --- Состояние во время сканирования --- */
+
+.scan-button--scanning {
+	cursor: default;
+}
+
+.scan-button--scanning:hover,
+.scan-button--scanning:active {
+	transform: translateY(0);
+	box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+/* Лупа "ездит" по окну */
+.scan-button--scanning .scan-button__magnifier {
+	animation: scan-move 1.7s infinite ease-in-out;
+}
+
+@keyframes scan-move {
+	0% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+	25% {
+		transform: translate(60px, -10px) rotate(5deg);
+	}
+	50% {
+		transform: translate(60px, -60px) rotate(-5deg);
+	}
+	75% {
+		transform: translate(0, -50px) rotate(3deg);
+	}
+	100% {
+		transform: translate(0, 0) rotate(0deg);
+	}
+}
+/* --- Состояния вёрстки (виды) --- */
+
+.view {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.view[hidden] {
+	display: none !important;
+}
+
+.view--result {
+	flex-direction: column;
+	gap: 8px;
+	align-items: stretch;
+}
+
+/* --- Карточка файла --- */
+
+.file-card {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 10px;
+	border: 1px dashed var(--accent);
+	background: #f8f6ff;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.file-card__icon {
+	font-size: 20px;
+	background: var(--accent-soft);
+	border-radius: 8px;
+	padding: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.file-card__info {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.file-card__name {
+	margin: 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--text);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.file-card__meta {
+	margin: 2px 0 0;
+	font-size: 11px;
+	color: #666;
+}
+
+.file-card__download {
+	border: none;
+	border-radius: 999px;
+	padding: 6px 10px;
+	font-size: 11px;
+	background: var(--accent);
+	color: #fff;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.file-card__download:hover {
+	background: #4c3ee0;
+}
+
+.file-card__download:focus-visible {
+	outline: 2px solid #2a1ad6;
+	outline-offset: 2px;
+}
+
+/* --- Кнопка "Новый скан" --- */
+
+.back-button {
+	margin-top: 4px;
+	align-self: center;
+	border-radius: 999px;
+	border: 1px solid var(--accent);
+	background: transparent;
+	font-size: 11px;
+	padding: 5px 10px;
+	cursor: pointer;
+	color: var(--accent);
+}
+
+.back-button:hover {
+	background: rgba(90, 77, 255, 0.06);
+}
+
+.back-button:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+}
+.primary-button {
+	width: 100%;
+	border: none;
+	border-radius: 999px;
+	padding: 6px 10px;
+	font-size: 12px;
+	background: var(--accent);
+	color: #fff;
+	cursor: pointer;
+}
+
+.primary-button:hover {
+	background: #4c3ee0;
+}
+
+.primary-button:focus-visible {
+	outline: 2px solid #2a1ad6;
+	outline-offset: 2px;
+}
