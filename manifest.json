@@ -14,9 +14,9 @@
 			"16": "icons/icon-16.png",
 			"32": "icons/icon-32.png"
 		},
-		"default_popup": "popup.html",
+		"default_popup": "index.html",
 		"default_title": "Провести аудит страницы на доступность"
 	},
-	"permissions": ["scripting", "tabs"],
+	"permissions": ["scripting", "tabs", "activeTab"],
 	"host_permissions": ["<all_urls>"]
 }
