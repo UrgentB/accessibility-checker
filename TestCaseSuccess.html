@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="ru"> <!-- (26) Тег <html> содержит атрибут lang с ненулевым значением -->
+<head>
+  <meta charset="utf-8">
+  <title>Тестовый документ: все сценарии доступности</title> <!-- (24) HTML-документ содержит элемент title в разделе head -->
+
+  <!-- 19.a пример: <link> содержит title (ненулевое значение) -->
+  <link rel="stylesheet" href="styles.css" title="Основные стили страницы">
+
+  <!-- 19.б пример: <link> с aria-label -->
+  <link rel="author" href="humans.txt" aria-label="Информация об авторах">
+
+  <!-- 19.в пример: <link> с aria-labelledby (id ссылки присутствует ниже) -->
+  <span id="linkLabel">Ресурс: Стили и информация</span>
+  <link rel="help" href="/help" aria-labelledby="linkLabel">
+</head>
+<body>
+
+  <!-- ================================
+       1. <img> варианты
+       ================================ -->
+
+  <!-- 1.a (alt ненулевой) -->
+  <!-- 1.a: Тег <img> содержит атрибут alt с ненулевым значением -->
+  <img src="img1.jpg" alt="Фото фасада здания"> <!-- 1.a -->
+
+  <!-- 1.a (alt нулевой) -->
+  <!-- 1.a: Тег <img> содержит атрибут alt с нулевым значением (декоративный) -->
+  <img src="decorative.svg" alt=""> <!-- 1.a -->
+
+  <!-- 1.б (aria-label ненулевой) -->
+  <!-- 1.б: Тег <img> содержит атрибут aria-label с ненулевым значением -->
+  <img src="icon.png" role="img" aria-label="Иконка уведомления"> <!-- 1.б -->
+
+  <!-- 1.в (aria-labelledby -> существует элемент с id и ненулевым текстом) -->
+  <!-- Создаём элемент с id="imgLabel" -->
+  <span id="imgLabel">Диаграмма роста за 2025 год</span>
+  <!-- 1.в: <img> с aria-labelledby="imgLabel" -->
+  <img src="chart.png" role="img" aria-labelledby="imgLabel"> <!-- 1.в -->
+
+  <!-- 1.г (aria-describedby -> существует элемент с id и ненулевым текстом) -->
+  <div id="imgDesc">Подробное описание диаграммы: рост продаж +20%.</div>
+  <img src="chart2.png" role="img" aria-describedby="imgDesc"> <!-- 1.г -->
+
+  <!-- ================================
+       2. <div> role="img" варианты
+       ================================ -->
+
+  <!-- 2.a: <div role="img"> с aria-labelledby (id exists and non-empty) -->
+  <span id="divImgLabel">Логотип компании в виде чайки</span>
+  <div role="img" aria-labelledby="divImgLabel"></div> <!-- 2.a -->
+
+  <!-- 2.б: <div role="img"> с aria-label (ненулевое) -->
+  <div role="img" aria-label="Символ безопасности — щит"></div> <!-- 2.б -->
+
+  <!-- ================================
+       3. <span> role="img" варианты
+       ================================ -->
+
+  <!-- 3.a: <span role="img"> с aria-labelledby -->
+  <span id="spanImgLabel">Эмблема успеха</span>
+  <span role="img" aria-labelledby="spanImgLabel">🏆</span> <!-- 3.a -->
+
+  <!-- 3.б: <span> содержит aria-label (замечание: в твоём условии была опечатка: проверка role в div) -->
+  <span role="img" aria-label="Иконка загрузки">⏳</span> <!-- 3.б -->
+
+  <!-- ================================
+       4. <figure> + <figcaption>
+       ================================ -->
+
+  <!-- 4.a: figure содержит figcaption с ненулевым текстовым значением -->
+  <figure>
+    <img src="map.png" alt="Карта">
+    <figcaption>Карта районов обслуживания — обновлена 01.01.2025</figcaption> <!-- 4.a -->
+  </figure>
+
+  <!-- ================================
+       5. <video> варианты
+       ================================ -->
+
+  <!-- 5.a: видео содержит <track> с атрибутом kind -->
+  <!-- 5.б: видео содержит aria-label (ненулевое) -->
+  <video controls aria-label="Видеопрезентация продукта"> <!-- 5.б -->
+    <source src="promo.mp4" type="video/mp4">
+    <track kind="captions" src="promo-captions.vtt" srclang="ru" label="Русские субтитры"> <!-- 5.a -->
+    Текстовая альтернатива: обзор продукта. <!-- fallback -->
+  </video>
+
+  <!-- 5.в: видео с aria-labelledby (референс на элемент с ненулевым текстом) -->
+  <h3 id="videoLabel">Обзор интерфейса</h3>
+  <video controls aria-labelledby="videoLabel"> <!-- 5.в -->
+    <source src="ui-demo.mp4" type="video/mp4">
+    <track kind="descriptions" src="ui-desc.vtt" srclang="ru" label="Описания"> <!-- 5.a дополнительно -->
+  </video>
+
+  <!-- 5.г: video с aria-describedby (element with non-empty text) -->
+  <div id="videoDesc">Видео показывает основные действия пользователя при оформлении заказа.</div>
+  <video controls aria-describedby="videoDesc"> <!-- 5.г -->
+    <source src="flow.mp4" type="video/mp4">
+    <track kind="captions" src="flow-captions.vtt" srclang="ru" label="Субтитры">
+  </video>
+
+  <!-- ================================
+       6. <object> варианты
+       ================================ -->
+
+  <!-- 6.a: object с aria-label -->
+  <object data="manual.pdf" type="application/pdf" aria-label="Руководство пользователя в формате PDF"> <!-- 6.a -->
+    Документ: Руководство пользователя. <a href="manual.pdf">Скачать</a>
+  </object>
+
+  <!-- 6.б: object с aria-labelledby (id exists) -->
+  <div id="objLabel">Техническая спецификация продукта</div>
+  <object data="spec.pdf" type="application/pdf" aria-labelledby="objLabel"> <!-- 6.б -->
+    Невозможно открыть PDF. <a href="spec.pdf">Скачать</a>
+  </object>
+
+  <!-- 6.в: object с aria-describedby (id exists and non-empty) -->
+  <div id="objDesc">Описание: спецификация включает электрические характеристики и размеры.</div>
+  <object data="spec2.pdf" type="application/pdf" aria-describedby="objDesc"> <!-- 6.в -->
+    Скачайте файл: <a href="spec2.pdf">spec2.pdf</a>
+  </object>
+
+  <!-- ================================
+       7. <audio> варианты
+       ================================ -->
+
+  <!-- 7.a: audio содержит <track> с kind -->
+  <!-- 7.б: audio содержит aria-label -->
+  <audio controls aria-label="Интервью с экспертом"> <!-- 7.б -->
+    <source src="interview.mp3" type="audio/mpeg">
+    <track kind="captions" src="interview-captions.vtt" srclang="ru" label="Субтитры"> <!-- 7.a -->
+    Ваш браузер не поддерживает аудио.
+  </audio>
+
+  <!-- 7.в: audio с aria-labelledby -->
+  <div id="audioTitle">Подкаст: Новости отрасли</div>
+  <audio controls aria-labelledby="audioTitle"> <!-- 7.в -->
+    <source src="podcast.mp3" type="audio/mpeg">
+    <track kind="descriptions" src="podcast-desc.vtt" srclang="ru" label="Описания"> <!-- 7.a -->
+  </audio>
+
+  <!-- 7.г: audio с aria-describedby (id exists) -->
+  <div id="audioDesc">Аудио содержит детали конференции и хронометраж выступлений.</div>
+  <audio controls aria-describedby="audioDesc"> <!-- 7.г -->
+    <source src="conf.mp3" type="audio/mpeg">
+    <track kind="captions" src="conf-captions.vtt" srclang="ru" label="Субтитры">
+  </audio>
+
+  <!-- ================================
+       8. <canvas> варианты
+       ================================ -->
+
+  <!-- 8.a: canvas имеет ненулевой текстовый контент -->
+  <!-- 8.б: canvas с aria-label -->
+  <canvas id="canvas1" width="400" height="200" aria-label="График посещаемости"> <!-- 8.б -->
+    Описание: график посещаемости показывает рост с января по декабрь. <!-- 8.a -->
+  </canvas>
+
+  <!-- 8.в: canvas с aria-labelledby (ref element exists) -->
+  <div id="canvasLabel">График средней температуры</div>
+  <canvas id="canvas2" width="400" height="200" aria-labelledby="canvasLabel"> <!-- 8.в -->
+    Этот canvas отображает среднюю температуру по месяцам. <!-- 8.a -->
+  </canvas>
+
+  <!-- 8.г: canvas с aria-describedby (ref element exists) -->
+  <div id="canvasDesc">Подробное текстовое описание графика — сезонный пик летом.</div>
+  <canvas id="canvas3" width="400" height="200" aria-describedby="canvasDesc"> <!-- 8.г -->
+    Альтернативный текстовый контент для canvas — сезонный пик летом. <!-- 8.a -->
+  </canvas>
+
+  <!-- ================================
+       9-15. Формы и элементы ввода
+       ================================ -->
+
+  <!-- 9. <form> с aria-label (9.a) -->
+  <form id="form1" aria-label="Форма регистрации"> <!-- 9.a -->
+    <!-- 10. <input> варианты -->
+    <!-- 10.a: input с aria-label -->
+    <label for="username">Имя пользователя</label>
+    <input id="username" name="username" type="text" autocomplete="username" aria-label="Имя пользователя"> <!-- 10.a & 30 -->
+
+    <!-- 10.b: input с aria-labelledby (создаём элемент с id userLabel) -->
+    <span id="userLabel">Электронная почта</span>
+    <label for="email" style="display:none">email</label>
+    <input id="email" name="email" type="email" autocomplete="email" aria-labelledby="userLabel"> <!-- 10.б & 30 -->
+
+    <!-- 11. <textarea> варианты -->
+    <!-- 11.a: textarea с aria-label -->
+    <label for="bio">Краткая биография</label>
+    <textarea id="bio" name="bio" autocomplete="off" aria-label="Краткая биография"></textarea> <!-- 11.a -->
+
+    <!-- 11.б: textarea с aria-labelledby -->
+    <div id="bioLabel">Подробная информация о проекте</div>
+    <textarea id="project" name="project" aria-labelledby="bioLabel"></textarea> <!-- 11.б -->
+
+    <!-- 12. <button> варианты -->
+    <!-- 12.a: button с aria-label -->
+    <button type="button" aria-label="Открыть настройки">⚙</button> <!-- 12.a -->
+
+    <!-- 12.б: button с aria-labelledby -->
+    <span id="saveLabel">Сохранить изменения</span>
+    <button type="submit" aria-labelledby="saveLabel">Сохранить</button> <!-- 12.б -->
+
+    <!-- 13. <select> варианты -->
+    <!-- 13.a: select с aria-label -->
+    <label for="country">Страна</label>
+    <select id="country" name="country" aria-label="Выберите страну">
+      <!-- 14. <option> варианты -->
+      <!-- 14.a: option с aria-label -->
+      <option value="ru" aria-label="Россия">Россия</option> <!-- 14.a -->
+      <!-- 14.б: option с aria-labelledby (создан span) -->
+      <span id="optLabel1" style="display:none">США</span>
+      <option value="us" aria-labelledby="optLabel1">United States</option> <!-- 14.б -->
+    </select>
+
+    <!-- 15. <fieldset> с legend и aria-label / aria-labelledby -->
+    <fieldset aria-label="Контактная информация"> <!-- 15.б (aria-label присутствует) -->
+      <legend>Контакты</legend> <!-- 15.a (legend присутствует) -->
+
+      <label for="phone">Телефон</label>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" aria-label="Номер телефона">
+    </fieldset> <!-- 15.a,15.б -->
+
+    <!-- Пример required поля: (27) Если input в form и required -> aria-required="true" -->
+    <label for="reqField">Обязательное поле</label>
+    <input id="reqField" name="reqField" type="text" autocomplete="off" required aria-required="true" aria-label="Обязательное текстовое поле"> <!-- 27 -->
+
+    <!-- (28) textarea required -> aria-required true -->
+    <label for="reqText">Обязательный комментарий</label>
+    <textarea id="reqText" name="reqText" required aria-required="true" aria-label="Обязательный комментарий"></textarea> <!-- 28 -->
+
+    <!-- (29) select required -> aria-required true -->
+    <label for="reqSelect">Обязательный выбор</label>
+    <select id="reqSelect" name="reqSelect" required aria-required="true" aria-label="Обязательный выбор">
+      <option value="">— выберите —</option>
+      <option value="1">Вариант 1</option>
+    </select> <!-- 29 -->
+
+    <!-- 25. input type=range содержит min,max,value,step (ненулевые) -->
+    <label for="vol">Громкость</label>
+    <input id="vol" name="volume" type="range" min="0" max="100" value="50" step="1" autocomplete="off" aria-label="Регулятор громкости"> <!-- 25 & 30 -->
+
+    <!-- 30. Каждый input содержит name и autocomplete (проверить) -->
+    <label for="city">Город</label>
+    <input id="city" name="address-level2" type="text" autocomplete="address-level2" aria-label="Город"> <!-- 30 -->
+
+  </form> <!-- 9.a -->
+
+  <!-- ================================
+       16. <progress>
+       ================================ -->
+
+  <!-- 16.a: progress с aria-label -->
+  <progress id="p1" value="40" max="100" aria-label="Прогресс выполнения" ></progress> <!-- 16.a -->
+
+  <!-- 16.б: progress с aria-labelledby (ref exists) -->
+  <div id="progLabel">Загрузка файла</div>
+  <progress id="p2" value="20" max="100" aria-labelledby="progLabel"></progress> <!-- 16.б -->
+
+  <!-- ================================
+       17. <embed>
+       ================================ -->
+
+  <!-- 17.a: embed с aria-label -->
+  <embed src="illustration.svg" type="image/svg+xml" aria-label="Иллюстрация процесса модели"> <!-- 17.a -->
+
+  <!-- 17.б: embed с aria-labelledby (ref exists) -->
+  <div id="embedLabel">Схема сборки устройства</div>
+  <embed src="assembly.svg" type="image/svg+xml" aria-labelledby="embedLabel"> <!-- 17.б -->
+
+  <!-- 17.в: embed с aria-describedby (ref exists) -->
+  <div id="embedDesc">Схема включает подписи всех узлов и список необходимых инструментов.</div>
+  <embed src="assembly2.svg" type="image/svg+xml" aria-describedby="embedDesc"> <!-- 17.в -->
+
+  <!-- ================================
+       18. <iframe> комплексное требование
+       ================================ -->
+
+  <!-- Создаём элемент для aria-labelledby -->
+  <div id="iframeLabel">Виджет погоды — локальные данные</div>
+
+  <!-- 18.a: iframe содержит title (ненулевое) -->
+  <!-- 18.b: iframe содержит sandbox с нужными значениями -->
+  <!-- 18.c: iframe имеет текстовой/нетекстовой контент (фоллбек) -->
+  <!-- 18.д: iframe содержит aria-labelledby (существует #iframeLabel) -->
+  <iframe src="about:blank"
+          title="Погодный виджет" 
+          sandbox="allow-same-origin allow-scripts allow-top-navigation" 
+          aria-labelledby="iframeLabel" >
+    Контент iframe: если встроенный виджет недоступен, отображается этот текст. 
+  </iframe>
+<!-- 18.г -->
+    <iframe src="about:blank"
+          title="Погодный виджет"
+          sandbox="allow-same-origin allow-scripts allow-top-navigation"
+          aria-label="Погодный виджет для текущего местоположения"> 
+    Контент iframe: если встроенный виджет недоступен, отображается этот текст.
+  </iframe>
+  <!-- ================================
+       20. <a> варианты
+       ================================ -->
+
+  <!-- 20.a: <a> с aria-label -->
+  <a href="/download" aria-label="Скачать отчёт в формате PDF">Скачать отчёт</a> <!-- 20.a -->
+
+  <!-- 20.б: <a> с aria-labelledby (создаем спан ref) -->
+  <span id="linkLabelProfile">Перейти в мой профиль</span>
+  <a href="/profile" aria-labelledby="linkLabelProfile">Профиль</a> <!-- 20.б -->
+
+  <!-- ================================
+       21. <div role="header"> aria-level
+       ================================ -->
+
+  <!-- 21: div с role="header" и aria-level ненулевым -->
+  <div role="header" aria-level="1"> <!-- 21 -->
+    <h1>Заголовок приложения</h1>
+  </div>
+
+  <!-- ================================
+       22-23. video/audio НЕ содержат autoplay
+       ================================ -->
+
+  <!-- Примеры выше (5.* и 7.*) не содержат autoplay — требование (22) и (23) выполнено. -->
+
+  <!-- ================================
+       Примечания про required -> aria-required
+       ================================ -->
+
+  <!-- (27,28,29) В формах выше: поля с required содержат aria-required="true" (см. #reqField, #reqText, #reqSelect) -->
+
+  <!-- ================================
+       Дополнения/пояснения
+       ================================ -->
+
+  <!--
+    Комментарии:
+    - Все aria-labelledby / aria-describedby ссылки указывают на существующие элементы с ненулевым текстовым содержимым.
+    - Все теги <video> и <audio> намеренно НЕ содержат атрибут autoplay (22,23).
+    - Все <input> внутри форм имеют name и autocomplete (30), включая range (25).
+    - <fieldset> содержит legend и aria-label (15).
+    - <link> в head покрывает варианты 19.a, 19.б, 19.в.
+  -->
+
+</body>
+</html>

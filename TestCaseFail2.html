@@ -1,0 +1,25 @@
+<!doctype html>
+<html> <!-- (26 variant) НОВОЕ НАРУШЕНИЕ: атрибут lang полностью ОТСУТСТВУЕТ (в предыдущем документе использовался вариант с lang="") -->
+<head>
+  <meta charset="utf-8">
+  <!-- (24 variant) НОВОЕ НАРУШЕНИЕ: элемент <title> ПРИСУТСТВУЕТ, но ЗНАЧЕНИЕ ПУСТО (в предыдущем документе был вариант отсутствующего <title>) -->
+  <title></title> <!-- пустой title — нарушает требование 'title' с ненулевым значением -->
+  <link rel="stylesheet" href="styles.css" title=""> <!-- (19) доп. вариант: title пустой (если ранее был отсутствующим) -->
+</head>
+<body>
+
+  <img src="comp_img_missing_target.jpg" aria-labelledby="missing-id-1"> <!-- (1) aria-labelledby указывает на несуществующий id (комплемент) -->
+
+  <img src="comp_img_no_alt_no_aria.jpg"> <!-- (1) НОВЫЙ ВАРИАНТ: атрибутов alt/aria-* нет (комплементарно другим сценариям) -->
+
+  <iframe src="widget-complement.html"></iframe> <!-- (18) НОВЫЙ ВАРИАНТ: iframe без title и без sandbox (комплементарно примерам с пустыми значениями) -->
+
+  <canvas id="canvas1" width="400" height="200" aria-label="График посещаемости"> <!-- 8.б -->
+    Описание: график посещаемости показывает рост с января по декабрь. <!-- 8.a -->
+  </canvas>
+
+  <link rel="alternate" href="/alt" aria-labelledby="nonexistentLinkLabel"> <!-- (19) aria-labelledby -> non-existent id (комплемент) -->
+
+  
+</body>
+</html>

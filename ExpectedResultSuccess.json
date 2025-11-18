@@ -1,0 +1,10 @@
+{
+  "result": {
+    "url": "file:///C:/Projects/AccessChecker/TestCaseSuccess.html",
+    "generalResult": {
+      "totalChecks": 68,
+      "successfulChecks": 68,
+      "failChecks": 0
+    }
+  }
+}
