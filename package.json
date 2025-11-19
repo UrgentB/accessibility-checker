@@ -1,0 +1,27 @@
+{
+  "name": "accessibility-checker",
+  "version": "1.0.0",
+  "description": "placeholder",
+  "keywords": [
+    "accessibility"
+  ],
+  "homepage": "https://github.com/UrgentB/accessibility-checker#readme",
+  "bugs": {
+    "url": "https://github.com/UrgentB/accessibility-checker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UrgentB/accessibility-checker.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axe-core": "^4.11.0",
+    "pa11y": "^9.0.1"
+  }
+}
