@@ -1,7 +1,16 @@
 import { ErrorDescriptionMap } from "./rulesMap";
 import * as rc from "./rulesChecks";
 
-function imgCheck(node) {
+function buildError(id) {
+    const error = ErrorDescriptionMap[id];
+    return {
+        idError: id,
+        descriptionError: error.description,
+        WCAGrequirement: error.wcagReq
+    }
+}
+
+export function imgCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'alt') || 
         rc.attrNoneNullValueCheck(node, 'aria-label') ||
@@ -10,11 +19,11 @@ function imgCheck(node) {
     ) {
         return null
     } else {
-        return ErrorDescriptionMap[1];
+        return buildError(1);
     }
 }
 
-function divCheck(node) {
+export function divCheck(node) {
     if (rc.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
         (
             rc.attrNoneNullValueCheck(node, 'aria-label') ||
@@ -26,11 +35,11 @@ function divCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[2];
+        return buildError(2);
     }
 }
 
-function spanCheck(node) {
+export function spanCheck(node) {
     if (rc.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
         (
             rc.attrNoneNullValueCheck(node, 'aria-label') || 
@@ -39,19 +48,19 @@ function spanCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[3];
+        return buildError(3);
     }
 }
 
-function figureCheck(node) {
+export function figureCheck(node) {
     if (rc.innerChildTextContentCheck(node, 'figcaption')) {
         return null;
     } else {
-        return ErrorDescriptionMap[4];
+        return buildError(4);
     }
 }
 
-function videoCheck(node) {
+export function videoCheck(node) {
     if (
         rc.innerChildHaveAttrCheck(node, 'track', 'kind') && 
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
@@ -60,11 +69,11 @@ function videoCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[5];
+        return buildError(5);
     }
 }
 
-function objectCheck(node) {
+export function objectCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') ||
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
@@ -72,11 +81,11 @@ function objectCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[6];
+        return buildError(6);
     }
 }
 
-function audioCheck(node) {
+export function audioCheck(node) {
     if (
         rc.innerChildHaveAttrCheck(node, 'track', 'kind') && 
         rc.attrNoneNullValueCheck(node, 'aria-label') ||
@@ -85,11 +94,11 @@ function audioCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[7];
+        return buildError(7);
     }
 }
 
-function canvasCheck(node) {
+export function canvasCheck(node) {
     if (
         rc.textContentNoneNullValueCheck(node) && 
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
@@ -98,22 +107,22 @@ function canvasCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[8];
+        return buildError(8);
     }
 }
 
-function formCheck(node) {
+export function formCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[9];
+        return buildError(9);
     }
 }
 
-function inputCheck(node) {
+export function inputCheck(node) {
     if ((
             rc.attrNoneNullValueCheck(node, 'aria-label') || 
             rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
@@ -124,33 +133,33 @@ function inputCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[10];
+        return buildError(10);
     }
 }
 
-function textareaCheck(node) {
+export function textareaCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[11];
+        return buildError(11);
     }
 }
 
-function buttonCheck(node) {
+export function buttonCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaLabelledByCheck(node)
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[12];
+        return buildError(12);
     }
 }
 
-function selectCheck(node) {
+export function selectCheck(node) {
     if ((
             rc.attrNoneNullValueCheck(node, 'aria-label') || 
             rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
@@ -158,22 +167,22 @@ function selectCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[13];
+        return buildError(13);
     }
 }
 
-function optionCheck(node) {
+export function optionCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[14];
+        return buildError(14);
     }
 }
 
-function fieldsetCheck(node) {
+export function fieldsetCheck(node) {
     if (
         rc.innerChildExistCheck(node, 'legend') && 
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
@@ -181,22 +190,22 @@ function fieldsetCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[15];
+        return buildError(15);
     }
 }
 
-function progressCheck(node) {
+export function progressCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[16];
+        return buildError(16);
     }
 }
 
-function embedCheck(node) {
+export function embedCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
@@ -204,11 +213,11 @@ function embedCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[17];
+        return buildError(17);
     }
 }
 
-function iframeCheck(node) {
+export function iframeCheck(node) {
     if (
         rc.hasAttributeValue(node, 'title') && 
         rc.hasAttributeExpectedValueCheck(node, 'sandbox', 'allow-same-origin allow-scripts allow-top-navigation') &&
@@ -218,11 +227,11 @@ function iframeCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[18];
+        return buildError(18);
     }
 }
 
-function linkCheck(node) {
+export function linkCheck(node) {
     if (
         rc.hasAttributeValue(node, 'title') || 
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
@@ -230,41 +239,41 @@ function linkCheck(node) {
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[19];
+        return buildError(19);
     }
 }
 
-function aCheck(node) {
+export function aCheck(node) {
     if (
         rc.attrNoneNullValueCheck(node, 'aria-label') || 
         rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
-        return ErrorDescriptionMap[20];
+        return buildError(20);
     }
 }
 
-function htmlCheck(node) {
+export function htmlCheck(node) {
     const head = node.querySelector('head');
     if (!head) {
-        return ErrorDescriptionMap[24];
+        return buildError(24);
     }
 
     const title = head.querySelector('title');
     if (!title) {
-        return ErrorDescriptionMap[24];
+        return buildError(24);
     }
 
     const text = title.textContent?.trim();
     if (!text) {
-        return ErrorDescriptionMap[24];
+        return buildError(24);
     }
     
     if (
         !rc.attrNoneNullValueCheck(node, 'lang')
     ) {
-        return ErrorDescriptionMap[26];
+        return buildError(26);
     }
 
     return null;
