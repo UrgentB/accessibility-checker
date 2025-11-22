@@ -1,4 +1,4 @@
-import { RulesMap } from "./rulesMap"
+import { ElemChecksMap } from "./rulesMap"
 
 const result = {
     url: location.href,
@@ -15,11 +15,11 @@ treeBypass(document, doc)
 function treeBypass(node, path){
     
     //tagName возвращается в верхнем регистре div => DIV
-    const fails = RulesMap.get(node.tagName).map(rule => rule(node));
+    const fails = ElemChecksMap.get(node.tagName).map(rule => rule(node)).filter(res => res);
 
-    result.generalResult.totalChecks += RulesMap.get(node.tagName).length;
+    result.generalResult.totalChecks += ElemChecksMap.get(node.tagName).length;
     result.generalResult.failChecks += fails.length;
-    result.generalResult.successfulChecks += RulesMap.get(node.tagName).length - fails.length;
+    result.generalResult.successfulChecks += ElemChecksMap.get(node.tagName).length - fails.length;
 
     result.failsDescription.push(
         {
