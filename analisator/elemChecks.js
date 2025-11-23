@@ -1,8 +1,5 @@
-import { ErrorDescriptionMap } from "./rulesMap.js";
-import * as rc from "./rulesChecks.js";
-
-function buildError(id) {
-    const error = ErrorDescriptionMap[id];
+window.buildError = function(id) {
+    const error = window.ErrorDescriptionMap.get(id);
     return {
         idError: id,
         descriptionError: error.description,
@@ -10,12 +7,12 @@ function buildError(id) {
     }
 }
 
-export function imgCheck(node) {
+window.imgCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'alt') || 
-        rc.attrNoneNullValueCheck(node, 'aria-label') ||
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.attrNoneNullValueCheck(node, 'alt') || 
+        window.attrNoneNullValueCheck(node, 'aria-label') ||
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null
     } else {
@@ -23,14 +20,14 @@ export function imgCheck(node) {
     }
 }
 
-export function divCheck(node) {
-    if (rc.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
+window.divCheck = function(node) {
+    if (window.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
         (
-            rc.attrNoneNullValueCheck(node, 'aria-label') ||
-            rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+            window.attrNoneNullValueCheck(node, 'aria-label') ||
+            window.ariaRelatedElementsCheck(node, 'aria-labelledby')
         ) || (
-            rc.hasAttributeExpectedValueCheck(node, 'role', 'header') &&
-            rc.attrNoneNullValueCheck(node, 'aria-level')
+            window.hasAttributeExpectedValueCheck(node, 'role', 'header') &&
+            window.attrNoneNullValueCheck(node, 'aria-level')
         )
     ) {
         return null;
@@ -39,11 +36,11 @@ export function divCheck(node) {
     }
 }
 
-export function spanCheck(node) {
-    if (rc.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
+window.spanCheck = function(node) {
+    if (window.hasAttributeExpectedValueCheck(node, 'role', 'img') && 
         (
-            rc.attrNoneNullValueCheck(node, 'aria-label') || 
-            rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+            window.attrNoneNullValueCheck(node, 'aria-label') || 
+            window.ariaRelatedElementsCheck(node, 'aria-labelledby')
         )
     ) {
         return null;
@@ -52,20 +49,20 @@ export function spanCheck(node) {
     }
 }
 
-export function figureCheck(node) {
-    if (rc.innerChildTextContentCheck(node, 'figcaption')) {
+window.figureCheck = function(node) {
+    if (window.innerChildTextContentCheck(node, 'figcaption')) {
         return null;
     } else {
         return buildError(4);
     }
 }
 
-export function videoCheck(node) {
+window.videoCheck = function(node) {
     if (
-        rc.innerChildHaveAttrCheck(node, 'track', 'kind') && 
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.innerChildHaveAttrCheck(node, 'track', 'kind') && 
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null;
     } else {
@@ -73,11 +70,11 @@ export function videoCheck(node) {
     }
 }
 
-export function objectCheck(node) {
+window.objectCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') ||
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.attrNoneNullValueCheck(node, 'aria-label') ||
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null;
     } else {
@@ -85,12 +82,12 @@ export function objectCheck(node) {
     }
 }
 
-export function audioCheck(node) {
+window.audioCheck = function(node) {
     if (
-        rc.innerChildHaveAttrCheck(node, 'track', 'kind') && 
-        rc.attrNoneNullValueCheck(node, 'aria-label') ||
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.innerChildHaveAttrCheck(node, 'track', 'kind') && 
+        window.attrNoneNullValueCheck(node, 'aria-label') ||
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null;
     } else {
@@ -98,12 +95,12 @@ export function audioCheck(node) {
     }
 }
 
-export function canvasCheck(node) {
+window.canvasCheck = function(node) {
     if (
-        rc.textContentNoneNullValueCheck(node) && 
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.textContentNoneNullValueCheck(node) && 
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null;
     } else {
@@ -111,10 +108,10 @@ export function canvasCheck(node) {
     }
 }
 
-export function formCheck(node) {
+window.formCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -122,13 +119,13 @@ export function formCheck(node) {
     }
 }
 
-export function inputCheck(node) {
+window.inputCheck = function(node) {
     if ((
-            rc.attrNoneNullValueCheck(node, 'aria-label') || 
-            rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+            window.attrNoneNullValueCheck(node, 'aria-label') || 
+            window.ariaRelatedElementsCheck(node, 'aria-labelledby')
         ) && (
-            rc.attrNoneNullValueCheck(node, 'name') &&
-            rc.attrNoneNullValueCheck(node, 'autocomplete')
+            window.attrNoneNullValueCheck(node, 'name') &&
+            window.attrNoneNullValueCheck(node, 'autocomplete')
         )
     ) {
         return null;
@@ -137,10 +134,10 @@ export function inputCheck(node) {
     }
 }
 
-export function textareaCheck(node) {
+window.textareaCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -148,10 +145,10 @@ export function textareaCheck(node) {
     }
 }
 
-export function buttonCheck(node) {
+window.buttonCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaLabelledByCheck(node)
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -159,10 +156,10 @@ export function buttonCheck(node) {
     }
 }
 
-export function selectCheck(node) {
+window.selectCheck = function(node) {
     if ((
-            rc.attrNoneNullValueCheck(node, 'aria-label') || 
-            rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+            window.attrNoneNullValueCheck(node, 'aria-label') || 
+            window.ariaRelatedElementsCheck(node, 'aria-labelledby')
         )
     ) {
         return null;
@@ -171,10 +168,10 @@ export function selectCheck(node) {
     }
 }
 
-export function optionCheck(node) {
+window.optionCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -182,11 +179,11 @@ export function optionCheck(node) {
     }
 }
 
-export function fieldsetCheck(node) {
+window.fieldsetCheck = function(node) {
     if (
-        rc.innerChildExistCheck(node, 'legend') && 
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.innewindowhildExistCheck(node, 'legend') && 
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -194,10 +191,10 @@ export function fieldsetCheck(node) {
     }
 }
 
-export function progressCheck(node) {
+window.progressCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -205,11 +202,11 @@ export function progressCheck(node) {
     }
 }
 
-export function embedCheck(node) {
+window.embedCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-describedby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby') || 
+        window.ariaRelatedElementsCheck(node, 'aria-describedby')
     ) {
         return null;
     } else {
@@ -217,13 +214,13 @@ export function embedCheck(node) {
     }
 }
 
-export function iframeCheck(node) {
+window.iframeCheck = function(node) {
     if (
-        rc.hasAttributeValue(node, 'title') && 
-        rc.hasAttributeExpectedValueCheck(node, 'sandbox', 'allow-same-origin allow-scripts allow-top-navigation') &&
-        rc.haveAnyContentCheck(node) || 
-        rc.attrNoneNullValueCheck(node, 'aria-label') ||
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        node.hasAttribute('title') && 
+        window.hasAttributeExpectedValueCheck(node, 'sandbox', 'allow-same-origin allow-scripts allow-top-navigation') &&
+        window.haveAnyContentCheck(node) || 
+        window.attrNoneNullValueCheck(node, 'aria-label') ||
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -231,11 +228,11 @@ export function iframeCheck(node) {
     }
 }
 
-export function linkCheck(node) {
+window.linkCheck = function(node) {
     if (
-        rc.hasAttributeValue(node, 'title') || 
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        node.hasAttribute('title') || 
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -243,10 +240,10 @@ export function linkCheck(node) {
     }
 }
 
-export function aCheck(node) {
+window.aCheck = function(node) {
     if (
-        rc.attrNoneNullValueCheck(node, 'aria-label') || 
-        rc.ariaRelatedElementsCheck(node, 'aria-labelledby')
+        window.attrNoneNullValueCheck(node, 'aria-label') || 
+        window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {
         return null;
     } else {
@@ -254,7 +251,7 @@ export function aCheck(node) {
     }
 }
 
-export function htmlCheck(node) {
+window.htmlCheck = function(node) {
     const head = node.querySelector('head');
     if (!head) {
         return buildError(24);
@@ -271,7 +268,7 @@ export function htmlCheck(node) {
     }
     
     if (
-        !rc.attrNoneNullValueCheck(node, 'lang')
+        !window.attrNoneNullValueCheck(node, 'lang')
     ) {
         return buildError(26);
     }

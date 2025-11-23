@@ -1,4 +1,4 @@
-export function ariaRelatedElementsCheck(node, attributeName) {
+window.ariaRelatedElementsCheck = function(node, attributeName) {
     const attr = node.getAttribute(attributeName);
 
     if (!attr || attr.trim() === "") {
@@ -14,7 +14,7 @@ export function ariaRelatedElementsCheck(node, attributeName) {
     }
 }
 
-export function attrNoneNullValueCheck(node, attrName) {
+window.attrNoneNullValueCheck = function(node, attrName) {
     if (!node.hasAttribute(attrName) || !node.getAttribute(attrName).trim()) {
         return false;
     } else {
@@ -22,7 +22,7 @@ export function attrNoneNullValueCheck(node, attrName) {
     }
 }
 
-export function innerChildTextContentCheck(node, innerChildSelector) {
+window.innerChildTextContentCheck = function(node, innerChildSelector) {
     const innerChild = node.querySelector(innerChildSelector);
 
     if (!innerChild) return false;
@@ -30,7 +30,7 @@ export function innerChildTextContentCheck(node, innerChildSelector) {
     return textContentNoneNullValueCheck(innerChild);
 }
 
-export function textContentNoneNullValueCheck(node) {
+window.textContentNoneNullValueCheck = function(node) {
     if (
         !node.textContent ||
         node.textContent.replace(/\s+/g, '').trim().length === 0
@@ -41,7 +41,7 @@ export function textContentNoneNullValueCheck(node) {
     }
 }
 
-export function roleCheck(node) {
+window.roleCheck = function(node) {
     if (!node.hasAttribute('aria-label') || node.getAttribute('aria-label').trim() === '') {
         return false
     } 
@@ -53,7 +53,7 @@ export function roleCheck(node) {
     return true
 }
 
-export function innerChildHaveAttrCheck(node, innerChildSelector, attrName) {
+window.innerChildHaveAttrCheck = function(node, innerChildSelector, attrName) {
     const caption = node.querySelector(innerChildSelector);
 
     if (!caption) return false;
@@ -65,12 +65,12 @@ export function innerChildHaveAttrCheck(node, innerChildSelector, attrName) {
     }
 }
 
-export function innerChildExistCheck(node, innerChildSelector) {
+window.innerChildExistCheck = function(node, innerChildSelector) {
     if (!node.querySelector(innerChildSelector)) return false;
     return true;
 }
 
-export function hasAttributeExpectedValueCheck(node, attributeName, value) {
+window.hasAttributeExpectedValueCheck = function(node, attributeName, value) {
     if (!node.hasAttribute(attributeName)) return false;
 
     const attr = node.getAttribute(attributeName);
@@ -79,7 +79,7 @@ export function hasAttributeExpectedValueCheck(node, attributeName, value) {
 }
 
 // Recheck
-export function haveAnyContentCheck(node) {
+window.haveAnyContentCheck = function(node) {
     let hasContent = false;
 
     const walker = (node) => {
@@ -103,7 +103,7 @@ export function haveAnyContentCheck(node) {
     return hasContent;
 } 
 
-export function hasTitleCheck() {
+window.hasTitleCheck = function() {
     const head = document.head;
     if (!head) return false;
 
@@ -111,7 +111,7 @@ export function hasTitleCheck() {
     return !!title && !!title.textContent.trim();
 }
 
-export function inputAttributesCheck(node) {
+window.inputAttributesCheck = function(node) {
     if (node.getAttribute("type") !== "range") return false;
 
     const attrs = ["min", "max", "value", "step"];
@@ -125,28 +125,28 @@ export function inputAttributesCheck(node) {
     return true;
 }
 
-export function checkRequiredAria(node) {
+window.checkRequiredAria = function(node) {
     return node.tagName?.toLowerCase() !== "input"
         || !node.closest("form")
         || !node.hasAttribute("required")
         || node.getAttribute("aria-required") === "true";
 }
 
-export function checkTextareaRequired(node) {
+window.checkTextareaRequired = function(node) {
     return node.tagName?.toLowerCase() !== "textarea"
         || !node.closest("form")
         || !node.hasAttribute("required")
         || node.getAttribute("aria-required") === "true";
 }
 
-export function checkSelectRequired(node) {
+window.checkSelectRequired = function(node) {
     return node.tagName?.toLowerCase() !== "select"
         || !node.closest("form")
         || !node.hasAttribute("required")
         || node.getAttribute("aria-required") === "true";
 }
 
-export function checkInputNameAndAutocomplete(node) {
+window.checkInputNameAndAutocomplete = function(node) {
     if (node.tagName?.toLowerCase() !== "input") return true;
 
     const name = node.getAttribute("name");
@@ -158,7 +158,7 @@ export function checkInputNameAndAutocomplete(node) {
     return true;
 }
 
-function checkDivAriaLevel(node) {
+window.checkDivAriaLevel = function(node) {
     if (!node || node.tagName?.toLowerCase() !== 'div') return true;
 
     const role = node.getAttribute('role');

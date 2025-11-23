@@ -1,30 +1,28 @@
-import * as ec from './elemChecks.js';
-
-export const ElemChecksMap = new Map([
-    ['img', ec.imgCheck], 
-    ['div', ec.divCheck], 
-    ['span', ec.spanCheck],
-    ['figure', ec.figureCheck],
-    ['video', ec.videoCheck],
-    ['object', ec.objectCheck], 
-    ['audio', ec.audioCheck], 
-    ['canvas', ec.canvasCheck],
-    ['form', ec.formCheck],
-    ['input', ec.inputCheck],
-    ['textarea', ec.textareaCheck],
-    ['button', ec.buttonCheck],
-    ['select', ec.selectCheck],
-    ['option', ec.optionCheck],
-    ['fieldset', ec.fieldsetCheck],
-    ['progress', ec.progressCheck], 
-    ['embed', ec.embedCheck],
-    ['iframe', ec.iframeCheck],
-    ['link', ec.linkCheck],
-    ['a', ec.aCheck],
-    ['html', ec.htmlCheck]
+window.ElemChecksMap = new Map([
+    ['img', window.imgCheck], 
+    ['div', window.divCheck], 
+    ['span', window.spanCheck],
+    ['figure', window.figureCheck],
+    ['video', window.videoCheck],
+    ['object', window.objectCheck], 
+    ['audio', window.audioCheck], 
+    ['canvas', window.canvasCheck],
+    ['form', window.formCheck],
+    ['input', window.inputCheck],
+    ['textarea', window.textareaCheck],
+    ['button', window.buttonCheck],
+    ['select', window.selectCheck],
+    ['option', window.optionCheck],
+    ['fieldset', window.fieldsetCheck],
+    ['progress', window.progressCheck], 
+    ['embed', window.embedCheck],
+    ['iframe', window.iframeCheck],
+    ['link', window.linkCheck],
+    ['a', window.aCheck],
+    ['html', window.htmlCheck]
 ]);
 
-export const ErrorDescriptionMap = new Map([
+window.ErrorDescriptionMap = new Map([
     [1, {
         description: 'Тег <img> не информативен',
         wcagReq: '1.1.1'

@@ -27,11 +27,15 @@ btn.addEventListener('click', async () => {
 		await chrome.scripting.executeScript({
 			target: { tabId: tab.id },
 			files: [
+				'./analisator/rulesChecks.js',
+				'./analisator/elemChecks.js',
+				'./analisator/rulesMap.js',
 				'./analisator/domTreeRunner.js'
 			],
 		});
 
 		const result = await initScan(tab);
+		console.log(result)
 		await prepareReport(result);
 		await showResultView();
 	} catch (error) {
