@@ -126,7 +126,7 @@ function prepareReport(report) {
 
 	const host = new URL(report.url).hostname;
 	const safeHost = host.replace(/[^a-z0-9.-]/gi, '_');
-	const ts = report.timestamp.replace(/[:.]/g, '-');
+	const ts = new Date().toISOString().replace(/[:.]/g, '-');
 	const fileName = `report-${safeHost}-${ts}.json`;
 	lastFileName = fileName;
 
