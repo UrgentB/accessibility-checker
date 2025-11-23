@@ -1,6 +1,6 @@
-import * as ec from './elemChecks';
+import * as ec from './elemChecks.js';
 
-export const ElemChecksMap = new Map(
+export const ElemChecksMap = new Map([
     ['img', ec.imgCheck], 
     ['div', ec.divCheck], 
     ['span', ec.spanCheck],
@@ -22,9 +22,9 @@ export const ElemChecksMap = new Map(
     ['link', ec.linkCheck],
     ['a', ec.aCheck],
     ['html', ec.htmlCheck]
-);
+]);
 
-export const ErrorDescriptionMap = new Map(
+export const ErrorDescriptionMap = new Map([
     [1, {
         description: 'Тег <img> не информативен',
         wcagReq: '1.1.1'
@@ -145,4 +145,4 @@ export const ErrorDescriptionMap = new Map(
         description: 'Тег <input> не имеет атрибутов автозаполнения',
         wcagReq: '3.3.7'
     }],
-);
+]);

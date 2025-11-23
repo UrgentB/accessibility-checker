@@ -1,5 +1,3 @@
-import treeBypass from './analisator/domTreeRunner';
-
 const statusEl = document.getElementById('status')
 
 const scanView = document.getElementById('scan-view')
@@ -26,12 +24,16 @@ btn.addEventListener('click', async () => {
 
 	try {
 		const tab = await getTargetTab();
-		const result = await initScan(tab);
+		await chrome.scripting.executeScript({
+			target: { tabId: tab.id },
+			files: [
+				'./analisator/domTreeRunner.js'
+			],
+		});
 
+		const result = await initScan(tab);
 		await prepareReport(result);
 		await showResultView();
-
-		console.log('Axe results:', result);
 	} catch (error) {
 		console.error(error);
 		statusEl.textContent = error.message || 'Ошибка при сканировании.';
@@ -66,13 +68,13 @@ function getTargetTab() {
 }
 
 /**
- * Init page scan (axe-core by default)
+ * Init page scan
  */
 async function initScan(tab) {
 	const [{ result }] = await chrome.scripting.executeScript({
 		target: { tabId: tab.id },
 		func: () => {
-			return treeBypass(document);
+			return window.treeBypass(document.documentElement);
 		},
 	});
 	return result;

@@ -1,5 +1,5 @@
-import { ErrorDescriptionMap } from "./rulesMap";
-import * as rc from "./rulesChecks";
+import { ErrorDescriptionMap } from "./rulesMap.js";
+import * as rc from "./rulesChecks.js";
 
 function buildError(id) {
     const error = ErrorDescriptionMap[id];
