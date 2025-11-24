@@ -19,7 +19,8 @@ window.ElemChecksMap = new Map([
     ['iframe', window.iframeCheck],
     ['link', window.linkCheck],
     ['a', window.aCheck],
-    ['html', window.htmlCheck]
+    ['html', window.htmlCheck],
+    ['head', window.headCheck]
 ]);
 
 window.ErrorDescriptionMap = new Map([

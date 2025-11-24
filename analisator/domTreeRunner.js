@@ -19,11 +19,10 @@
             const checkFunc = window.ElemChecksMap.get(tagName); 
     
             const fail = checkFunc(node);
-            const isFail = fail && fail.length > 0;
     
             result.generalResult.totalChecks += 1;
-            result.generalResult.failChecks += isFail ? 1 : 0;
-            result.generalResult.successfulChecks += isFail ? 0 : 1;
+            result.generalResult.failChecks += fail ? 1 : 0;
+            result.generalResult.successfulChecks += fail ? 0 : 1;
     
             result.failsDescription.push(
                 {

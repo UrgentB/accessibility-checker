@@ -251,12 +251,18 @@ window.aCheck = function(node) {
     }
 }
 
-window.htmlCheck = function(node) {
-    const head = node.querySelector('head');
-    if (!head) {
-        return buildError(24);
+window.htmlCheck = function(node) { 
+    if (
+        !window.attrNoneNullValueCheck(node, 'lang')
+    ) {
+        return buildError(26);
     }
 
+    return null;
+}
+
+window.headCheck = function(node){
+    
     const title = head.querySelector('title');
     if (!title) {
         return buildError(24);
@@ -267,11 +273,5 @@ window.htmlCheck = function(node) {
         return buildError(24);
     }
     
-    if (
-        !window.attrNoneNullValueCheck(node, 'lang')
-    ) {
-        return buildError(26);
-    }
-
     return null;
 }
