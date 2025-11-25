@@ -1,3 +1,5 @@
+import { ReportToMarkdown } from './ReportToMarkdown.js'
+
 const statusEl = document.getElementById('status')
 
 const scanView = document.getElementById('scan-view')
@@ -10,65 +12,74 @@ const fileSizeEl = document.getElementById('file-size')
 const btn = document.getElementById('scan-btn')
 const downloadBtn = document.getElementById('download-btn')
 const backBtn = document.getElementById('back-btn')
+const downloadMdBtn = document.getElementById('download-md-btn')
 
-let lastReportJson = null;
-let lastFileName = null;
-let isScanning = false;
+let lastReportJson = null
+let lastFileName = null
+let isScanning = false
+let lastReportMd = null
+let lastMdFileName = null
 
 btn.addEventListener('click', async () => {
-	if (isScanning) return;
+	if (isScanning) return
 
-	isScanning = true;
-	updateScanButton(true);
-	statusEl.textContent = 'Сканирую страницу...';
+	isScanning = true
+	updateScanButton(true)
+	statusEl.textContent = 'Сканирую страницу...'
 
 	try {
-		const tab = await getTargetTab();
+		const tab = await getTargetTab()
 		await chrome.scripting.executeScript({
 			target: { tabId: tab.id },
 			files: [
 				'./analisator/rulesChecks.js',
 				'./analisator/elemChecks.js',
 				'./analisator/rulesMap.js',
-				'./analisator/domTreeRunner.js'
+				'./analisator/domTreeRunner.js',
 			],
-		});
+		})
 
-		const result = await initScan(tab);
+		const result = await initScan(tab)
 		console.log(result)
-		await prepareReport(result);
-		await showResultView();
+		await prepareReport(result)
+		await showResultView()
 	} catch (error) {
-		console.error(error);
-		statusEl.textContent = error.message || 'Ошибка при сканировании.';
+		console.error(error)
+		statusEl.textContent = error.message || 'Ошибка при сканировании.'
 	} finally {
-		stopScanning();
+		stopScanning()
 	}
-});
+})
 
 /**
  * Get target tab (active by default)
  */
 function getTargetTab() {
 	return new Promise((resolve, reject) => {
-		chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+		chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
 			if (chrome.runtime.lastError) {
-				return reject(new Error('tabs.query: ' + chrome.runtime.lastError.message));
+				return reject(
+					new Error('tabs.query: ' + chrome.runtime.lastError.message)
+				)
 			}
 
-			const tab = tabs?.[0];
+			const tab = tabs?.[0]
 			if (!tab?.id) {
-				return reject(new Error('Не удалось найти активную вкладку.'));
+				return reject(new Error('Не удалось найти активную вкладку.'))
 			}
 
-			const url = tab.url || '';
+			const url = tab.url || ''
 			if (!/^https?:|^file:/i.test(url)) {
-				return reject(new Error('Эта вкладка — системная (chrome:// и т.п.). С неё нельзя собрать DOM.'));
+				return reject(
+					new Error(
+						'Эта вкладка — системная (chrome:// и т.п.). С неё нельзя собрать DOM.'
+					)
+				)
 			}
 
-			resolve(tab);
-		});
-	});
+			resolve(tab)
+		})
+	})
 }
 
 /**
@@ -78,103 +89,123 @@ async function initScan(tab) {
 	const [{ result }] = await chrome.scripting.executeScript({
 		target: { tabId: tab.id },
 		func: () => {
-			return window.treeBypass(document.documentElement);
+			return window.treeBypass(document.documentElement)
 		},
-	});
-	return result;
+	})
+	return result
 }
 
 /**
  * Update btn states
  */
 function updateScanButton(isActive) {
-	btn.disabled = isActive;
-	btn.classList.toggle('scan-button--scanning', isActive);
+	btn.disabled = isActive
+	btn.classList.toggle('scan-button--scanning', isActive)
 }
 
 /**
  * Stop scanning
  */
 function stopScanning() {
-	isScanning = false;
-	updateScanButton(false);
+	isScanning = false
+	updateScanButton(false)
 }
 
 /**
  * Display scan page
  */
 function showScanView() {
-	scanView.hidden = false;
-	resultView.hidden = true;
+	scanView.hidden = false
+	resultView.hidden = true
 }
 
 /**
  * Display result page
  */
 function showResultView() {
-	scanView.hidden = true;
-	resultView.hidden = false;
-	statusEl.textContent = 'Отчёт готов. Нажмите «Скачать JSON» или «Новый скан».';
+	scanView.hidden = true
+	resultView.hidden = false
+	statusEl.textContent = 'Отчёт готов. Нажмите «Скачать JSON» или «Новый скан».'
 }
 
 /**
  * Create report, update UI
  */
 function prepareReport(report) {
-	const jsonText = JSON.stringify(report, null, 2);
-	lastReportJson = jsonText;
+	const jsonText = JSON.stringify(report, null, 2)
+	lastReportJson = jsonText
 
-	const host = new URL(report.url).hostname;
-	const safeHost = host.replace(/[^a-z0-9.-]/gi, '_');
-	const ts = new Date().toISOString().replace(/[:.]/g, '-');
-	const fileName = `report-${safeHost}-${ts}.json`;
-	lastFileName = fileName;
+	const host = new URL(report.url).hostname
+	const safeHost = host.replace(/[^a-z0-9.-]/gi, '_')
+	const ts = new Date().toISOString().replace(/[:.]/g, '-')
 
-	const blob = new Blob([jsonText], { type: 'application/json' });
-	const sizeKb = Math.max(1, Math.round(blob.size / 1024));
+	const fileName = `report-${safeHost}-${ts}.json`
+	lastFileName = fileName
 
-	fileNameEl.textContent = fileName;
-	fileUrlEl.textContent = host;
-	fileSizeEl.textContent = `~${sizeKb} KB`;
+	const blob = new Blob([jsonText], { type: 'application/json' })
+	const sizeKb = Math.max(1, Math.round(blob.size / 1024))
+
+	fileNameEl.textContent = fileName
+	fileUrlEl.textContent = host
+	fileSizeEl.textContent = `~${sizeKb} KB`
+
+	lastReportMd = ReportToMarkdown(jsonText)
+	lastMdFileName = `report-${safeHost}-${ts}.md`
 }
 
-/**
- * Download report as JSON file
- */
 function downloadReport(jsonText, fileName) {
-	const blob = new Blob([jsonText], { type: 'application/json' });
-	const objUrl = URL.createObjectURL(blob);
+	const blob = new Blob([jsonText], { type: 'application/json' })
+	const objUrl = URL.createObjectURL(blob)
 
-	const a = document.createElement('a');
-	a.href = objUrl;
-	a.download = fileName;
-	document.body.appendChild(a);
-	a.click();
-	a.remove();
-	URL.revokeObjectURL(objUrl);
+	const a = document.createElement('a')
+	a.href = objUrl
+	a.download = fileName
+	document.body.appendChild(a)
+	a.click()
+	a.remove()
+	URL.revokeObjectURL(objUrl)
 }
 
-/**
- * Download button listener
- */
 downloadBtn.addEventListener('click', () => {
 	if (!lastReportJson || !lastFileName) {
-		statusEl.textContent = 'Отчёт ещё не подготовлен.';
-		return;
+		statusEl.textContent = 'Отчёт ещё не подготовлен.'
+		return
 	}
 	try {
-		downloadReport(lastReportJson, lastFileName);
-		statusEl.textContent = 'JSON-файл скачан.';
+		downloadReport(lastReportJson, lastFileName)
+		statusEl.textContent = 'JSON-файл скачан.'
 	} catch (e) {
-		console.error(e);
-		statusEl.textContent = 'Ошибка при скачивании.';
+		console.error(e)
+		statusEl.textContent = 'Ошибка при скачивании.'
 	}
-});
+})
 
-/**
- * Back button listener
- */
+downloadMdBtn.addEventListener('click', () => {
+	if (!lastReportMd || !lastMdFileName) {
+		statusEl.textContent = 'Отчёт ещё не подготовлен.'
+		return
+	}
+	try {
+		const blob = new Blob([lastReportMd], { type: 'text/markdown' })
+		const objUrl = URL.createObjectURL(blob)
+
+		const a = document.createElement('a')
+		a.href = objUrl
+		a.download = lastMdFileName
+
+		document.body.appendChild(a)
+		a.click()
+		a.remove()
+		URL.revokeObjectURL(objUrl)
+
+		statusEl.textContent = 'Markdown-отчёт скачан.'
+	} catch (e) {
+		console.error(e)
+		statusEl.textContent = 'Ошибка при скачивании.'
+	}
+})
+
 backBtn.addEventListener('click', () => {
-	showScanView();
-	statusEl.textContent = '';
-});
+	showScanView()
+	statusEl.textContent = ''
+})
