@@ -261,9 +261,8 @@ window.htmlCheck = function(node) {
     return null;
 }
 
-window.headCheck = function(node){
-    
-    const title = head.querySelector('title');
+window.headCheck = function(node) {
+    const title = node.querySelector('title');
     if (!title) {
         return buildError(24);
     }
