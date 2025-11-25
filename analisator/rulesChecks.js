@@ -78,28 +78,26 @@ window.hasAttributeExpectedValueCheck = function(node, attributeName, value) {
     return true
 }
 
-// Recheck
 window.haveAnyContentCheck = function(node) {
     let hasContent = false;
 
-    const walker = (node) => {
-        if (n === node) hasContent = false;
-
-        if (n.nodeType === Node.TEXT_NODE) {
-            const text = n.textContent.trim();
-            if (text.length > 0) {
-                hasText = true;
+    const checkNodeContent = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (node.textContent.trim().length > 0) {
+                hasContent = true;
             }
         }
 
-        if (n.nodeType === Node.ELEMENT_NODE) {
-            hasNonText = true;
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            hasContent = true;
         }
 
-        return NodeFilter.FILTER_SKIP;
+        for (const child of node.childNodes) {
+            checkNodeContent(child);
+        }
     }    
 
-    walker(node);
+    checkNodeContent(node);
     return hasContent;
 } 
 

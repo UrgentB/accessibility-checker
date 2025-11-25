@@ -181,7 +181,7 @@ window.optionCheck = function(node) {
 
 window.fieldsetCheck = function(node) {
     if (
-        window.innewindowhildExistCheck(node, 'legend') && 
+        window.innerChildExistCheck(node, 'legend') && 
         window.attrNoneNullValueCheck(node, 'aria-label') || 
         window.ariaRelatedElementsCheck(node, 'aria-labelledby')
     ) {

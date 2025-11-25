@@ -19,18 +19,21 @@
             const checkFunc = window.ElemChecksMap.get(tagName); 
     
             const fail = checkFunc(node);
+            const isFail = fail ? true : false;
     
             result.generalResult.totalChecks += 1;
-            result.generalResult.failChecks += fail ? 1 : 0;
-            result.generalResult.successfulChecks += fail ? 0 : 1;
+            result.generalResult.failChecks += isFail ? 1 : 0;
+            result.generalResult.successfulChecks += isFail ? 0 : 1;
     
-            result.failsDescription.push(
-                {
-                    idElement: node.hasAttribute("id") ? node.id : null,
-                    pathElement: path,
-                    occuredErrors: fail
-                }
-            )
+            if (isFail) {
+                result.failsDescription.push(
+                    {
+                        idElement: node.hasAttribute("id") ? node.id : null,
+                        pathElement: fullPath,
+                        occuredErrors: fail
+                    }
+                )
+            }
         }
 
 
@@ -52,8 +55,10 @@ window.buildNodePath = function(node, tagName, path) {
 
     const index = node.parentNode ? childs.indexOf(node) + 1 : 1;
     const segment = `${tagName}[${index}]`;
-    
-    return path ? `${path}/${segment}` : `/${segment}`;
+
+    const fullPath = path ? `${path}/${segment}` : `/${segment}`
+
+    return fullPath;
     
 }
 
