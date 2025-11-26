@@ -125,7 +125,7 @@ function showScanView() {
 function showResultView() {
 	scanView.hidden = true
 	resultView.hidden = false
-	statusEl.textContent = 'Отчёт готов. Нажмите «Скачать JSON» или «Новый скан».'
+	statusEl.textContent = 'Отчёт готов. Нажмите «Скачать JSON», «Скачать Markdown» или «Новый скан».'
 }
 
 /**
